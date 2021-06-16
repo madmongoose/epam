@@ -1,0 +1,21 @@
+---
+- hosts: [nodes]
+  user: ansible
+  become: yes
+  vars_files: keys
+
+  tasks:
+    - name: Create users group
+      group: name=users state=present
+    - name: Create users and add to group users
+      user:
+        name: "{{item}}"
+        password: "{{ tmppwd | password_hash('sha512') }}"
+        group: users
+        comment: "{{item}},{{item}}@example.com"
+        state: present
+        update_password: on_create
+      loop:
+        - Alice
+        - Bob
+        - Carol

@@ -1,0 +1,16 @@
+---
+- hosts: [nodes]
+  user: ansible
+  become: yes
+
+  tasks:
+    - name: Edit Grub config
+      lineinfile:
+        path: /etc/default/grub
+        state: present
+        regexp: 'GRUB_CMDLINE_LINUX='
+        line: 'GRUB_CMDLINE_LINUX="crashkernel=auto resume=/dev/mapper/ol-swap rd.lvm.lv=ol/root rd.lvm.lv=ol/swap rhgb quiet net.ifnames=0 biosdevname=0"'
+      register: grub2config
+    - name: Update Grub
+      shell: grub2-mkconfig
+      when: grub2config.changed

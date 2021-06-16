@@ -1,0 +1,29 @@
+---
+- hosts: [nodes]
+  user: ansible
+  become: yes
+
+  tasks:
+    - name: Close http/https
+      firewalld:
+         port: 80/tcp
+         permanent: true
+         state: disabled
+      firewalld:
+         port: 443/tcp
+         permanent: true
+         state: disabled
+    - name: Stop httpd service
+      service: name=httpd state=stopped enabled=no
+    - name: remove httpd
+      dnf: 
+         name=httpd 
+         state=absent
+    - name: Remove index.html file
+      file:
+         path: "/var/www/html/index.html"
+         state: absent
+    - name: reload service firewalld
+      systemd:
+        name: firewalld
+        state: reloaded
