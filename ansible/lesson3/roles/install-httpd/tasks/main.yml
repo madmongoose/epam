@@ -1,0 +1,24 @@
+---
+- hosts: [nodes]
+  user: ansible
+  become: yes
+
+  tasks:
+    - name: install httpd
+      dnf:
+         name=httpd 
+         state=latest
+    - name: Create startpage
+      copy:
+        dest: "/var/www/html/index.html"
+        content: "Welcome to my web server"
+    - name: Start httpd service
+      service: name=httpd state=started enabled=yes
+    - name: Enable firewalld
+      service: name=firewalld state=started enabled=yes
+    - name: Set dmz as default policy
+      command: firewall-cmd --set-default-zone=public
+    - name: Allow http/https
+      command: firewall-cmd --zone=public --permanent --add-service=http --add-service=https
+    - name: Restart firewalld service
+      service: name=firewalld state=restarted

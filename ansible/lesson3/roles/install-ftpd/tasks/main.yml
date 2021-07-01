@@ -1,0 +1,9 @@
+---
+  - name: Install vsftpd service
+    yum: name=vsftpd state=latest
+  - name: Start vsftpd service
+    service: name=vsftpd state=started enabled=yes
+  - name: Check service status
+    service_facts:
+  - debug:
+      var: ansible_facts.services["vsftpd.service"].state
