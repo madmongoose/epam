@@ -1,6 +1,0 @@
----
-- name: Restart vsftpd
-  service:
-    name: vsftpd
-    state: restarted
-  listen: Restart vsftpd
