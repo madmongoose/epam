@@ -1,6 +1,8 @@
 ---
-  - name: Install vsftpd service
-    yum: name=vsftpd state=latest
+  - name: Replace vsftp config
+    template:
+      src: config.j2
+      dest: "/etc/vsftpd/vsftpd.conf"
   - name: Start vsftpd service
     service: name=vsftpd state=started enabled=yes
   - name: Check service status

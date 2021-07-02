@@ -1,8 +1,0 @@
----
-- hosts: [nodes]
-  user: ansible
-  become: yes
-  roles:
-    - install-httpd
-    - install-ftpd
-  

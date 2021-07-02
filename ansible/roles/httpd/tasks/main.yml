@@ -1,0 +1,17 @@
+---
+  - name: Start httpd service
+    service: name=httpd state=started enabled=yes
+  - name: Create startpage
+    template:
+      src: startpage.j2
+      dest: "/var/www/html/index.html"
+  - name: Edit httpd config
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      state: present
+      regexp: 'DocumentRoot "/var/www/html"'
+      line: 'DocumentRoot "/var/www/site"'
+    notify:
+    - Restart httpd
+  - debug:
+      var: ansible_facts.services["httpd.service"].state

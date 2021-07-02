@@ -1,0 +1,10 @@
+---
+- hosts: [nodes]
+  user: ansible
+  become: yes
+  roles:
+    - common
+    - httpd
+    - vsftpd
+    - git
+    - security
