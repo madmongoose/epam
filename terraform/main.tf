@@ -247,7 +247,7 @@ sudo wget https://wordpress.org/latest.tar.gz
 sudo tar -xzf latest.tar.gz
 sudo cp -r wordpress/* /var/www/html/
 sudo wget https://raw.githubusercontent.com/madmongoose/epam/main/terraform/wp-config.php
-sudo mv wp-config.php /var/www/html/wp-config/
+sudo mv wp-config.php /var/www/html/
 sudo sed -i 's/test1234/${data.aws_ssm_parameter.get-epm-rds-pass.value}/g' /var/www/html/wp-config.php
 sudo sed -i 's/localhost/${module.db.db_instance_endpoint}/g' /var/www/html/wp-config.php
 sudo chown -R apache /var/www
