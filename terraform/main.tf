@@ -272,6 +272,7 @@ resource "aws_instance" "epm-srv-web-2" {
 #!/bin/bash
 sudo yum -y update
 sudo yum -y install httpd
+sudo amazon-linux-extras install php7.4 -y
 sudo rm -r /var/www/html/*
 sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_mount_target.epm-efs-mt-2.mount_target_dns_name}:/ /var/www/html
 sudo sed -i 's/test1234/${data.aws_ssm_parameter.get-epm-rds-pass.value}/g' /var/www/html/wp-config.php
@@ -279,9 +280,7 @@ sudo sed -i 's/localhost/${module.db.db_instance_endpoint}/g' /var/www/html/wp-c
 sudo yum -y install php php-gd
 sudo chown -R apache /var/www
 sudo chgrp -R apache /var/www
-sudo rm latest.tar.gz
-sudo systemctl enable httpd
-sudo systemctl start httpd
+sudo chmod 2775 /var/www
 sudo systemctl enable httpd
 sudo systemctl start httpd
 EOF
