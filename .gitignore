@@ -3,3 +3,15 @@ ansible/.DS_Store
 .DS_Store
 ansible/.DS_Store
 .DS_Store
+terraform/*.pem
+*.pem
+terraform/terraform.tfstate
+terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform.tfstate.backup
+terraform/.terraform
+.terraform
+terraform/.terraform.lock.hcl
+.terraform.lock.hcl
+terraform/.terraform.tfstate.lock.info
+.terraform.tfstate.lock.info
