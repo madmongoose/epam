@@ -241,6 +241,7 @@ resource "aws_instance" "epm-srv-web-1" {
 #!/bin/bash
 sudo yum -y update
 sudo yum -y install httpd
+sudo amazon-linux-extras install php7.4 -y
 sudo rm -r /var/www/html/*
 sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${aws_efs_mount_target.epm-efs-mt-1.mount_target_dns_name}:/ /var/www/html
 sudo wget https://wordpress.org/latest.tar.gz
@@ -256,7 +257,6 @@ sudo chmod 2775 /var/www
 sudo rm latest.tar.gz
 sudo systemctl enable httpd
 sudo systemctl start httpd
-sudo yum -y install php php-gd
 EOF
 depends_on = [aws_efs_file_system.epm-efs, module.db]
 tags = merge(var.common-tags, {Name = "${var.common-tags["Environment"]} Web Server 1"})
