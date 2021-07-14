@@ -4,10 +4,9 @@
 # Create:
 # - Security Groups for Web Server, RDS and EFS
 # - Network, IGW and Routes
-# - Instances
 # - Classic Load Balancer in 2 Availability Zones
+# - Instances and EFS storage
 # - RDS
-#
 #
 #-------------------------------------------------
 
@@ -284,7 +283,7 @@ sudo chmod 2775 /var/www
 sudo systemctl enable httpd
 sudo systemctl start httpd
 EOF
-depends_on = [aws_efs_file_system.epm-efs, module.db]
+depends_on = [aws_instance.epm-srv-web-1, aws_efs_file_system.epm-efs, module.db]
 tags = merge(var.common-tags, {Name = "${var.common-tags["Environment"]} Web Server 2"})
 }
 
