@@ -1,5 +1,5 @@
-//variable "aws_access_key" {}
-//variable "aws_secret_key" {}
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
 variable "generated_key_name" {
   type        = string
   //default     = "terraform-key-pair"
