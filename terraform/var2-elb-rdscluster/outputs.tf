@@ -30,6 +30,6 @@ output "rds_addresses-2" {
     value = aws_rds_cluster.epm-rds-cluster.endpoint
 }*/
 
-output "Please copy and past this link into your browser to access wordpress" {
+output "Please_copy_and_past_this_link_into_your_browser_to_access_wordpress" {
   value = aws_elb.epm-elb.dns_name
 }
