@@ -316,7 +316,7 @@ resource "aws_efs_mount_target" "epm-efs-mt-2" {
 resource "random_string" "epm-rds-pass" {
   length           = 10
   special          = true
-  override_special = "!#$&"
+  override_special = "!#&"
 
   /*keepers = {
     kepeer1 = var.name # Uncoment for change db password
