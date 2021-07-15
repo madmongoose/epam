@@ -4,7 +4,7 @@
 # Create:
 # - Security Groups for Web Server, RDS and EFS
 # - Network, IGW and Routes
-# - Classic Load Balancer in 2 Availability Zones
+# - Application Load Balancer in 2 Availability Zones
 # - Instances and EFS storage
 # - RDS
 #
