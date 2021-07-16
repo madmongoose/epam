@@ -1,8 +1,10 @@
 Build a Wordpress HA CMS with RDS Cluster in the AWS Cloud using Terraform
 
-Go to project folder from cmd;
-Enter terraform init comand;
-Enter terraform apply;
-Enter any name (english word) for ssh certificate;
-Enter yes;
-After deployment, you can see a link below. Copy and past it into your browser to access wordpress.
+1. Go to project folder from cmd;
+2. Enter terraform init comand;
+3. Enter terraform apply;
+4. Enter any name (english word) for ssh certificate;
+5. Enter yes;
+6. After deployment, you can see a link below called web-loadbalancer-url. Copy and past it into your browser to access wordpress.
+
+Note: If wordpress doesn't open, wait about a minute and refresh the page.
