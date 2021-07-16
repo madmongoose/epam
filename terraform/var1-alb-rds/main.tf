@@ -12,18 +12,16 @@
 
 provider "aws" {
     region = "eu-west-2"
-    access_key = var.aws_access_key
-    secret_key = var.aws_secret_key
 }
 
 data "aws_availability_zones" "available" {}
 
 data "aws_ami" "latest-amazon2" {
-    owners = ["amazon"]
+    owners      = ["amazon"]
     most_recent = true
     filter {
-      name = "name"
-      values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+      name      = "name"
+      values    = ["amzn2-ami-hvm-*-x86_64-gp2"]
     }
 }
 
@@ -140,14 +138,14 @@ resource "aws_internet_gateway" "epm-igw" {
 resource "aws_subnet" "epm-pub-net-1" {
   vpc_id                  = aws_vpc.epm-vpc-main.id
   cidr_block              = "10.10.10.0/24"
-  availability_zone = data.aws_availability_zones.available.names[0]
+  availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
 }
 
 resource "aws_subnet" "epm-pub-net-2" {
   vpc_id                  = aws_vpc.epm-vpc-main.id
   cidr_block              = "10.10.20.0/24"
-  availability_zone = data.aws_availability_zones.available.names[1]
+  availability_zone       = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch = true
 }
 
@@ -231,11 +229,11 @@ resource "aws_lb_listener" "epm-alb-lr" {
 #-------------------------------------------------
 
 resource "aws_instance" "epm-srv-web-1" {
-  ami = data.aws_ami.latest-amazon2.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.epm-pub-net-1.id
-  vpc_security_group_ids = [aws_security_group.epm-sg-web.id]
-  key_name = aws_key_pair.generated_key.key_name
+  ami                     = data.aws_ami.latest-amazon2.id
+  instance_type           = "t2.micro"
+  subnet_id               = aws_subnet.epm-pub-net-1.id
+  vpc_security_group_ids  = [aws_security_group.epm-sg-web.id]
+  key_name                = aws_key_pair.generated_key.key_name
   user_data = <<EOF
 #!/bin/bash
 sudo yum -y update
@@ -257,16 +255,16 @@ sudo rm latest.tar.gz
 sudo systemctl enable httpd
 sudo systemctl start httpd
 EOF
-depends_on = [aws_efs_file_system.epm-efs, module.db]
-tags = merge(var.common-tags, {Name = "${var.common-tags["Environment"]} Web Server 1"})
+depends_on  = [aws_efs_file_system.epm-efs, module.db]
+tags        = merge(var.common-tags, {Name = "${var.common-tags["Environment"]} Web Server 1"})
 }
 
 resource "aws_instance" "epm-srv-web-2" {
-  ami = data.aws_ami.latest-amazon2.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.epm-pub-net-2.id
-  vpc_security_group_ids = [aws_security_group.epm-sg-web.id]
-  key_name = aws_key_pair.generated_key.key_name
+  ami                     = data.aws_ami.latest-amazon2.id
+  instance_type           = "t2.micro"
+  subnet_id               = aws_subnet.epm-pub-net-2.id
+  vpc_security_group_ids  = [aws_security_group.epm-sg-web.id]
+  key_name                = aws_key_pair.generated_key.key_name
   user_data = <<EOF
 #!/bin/bash
 sudo yum -y update
@@ -283,8 +281,8 @@ sudo chmod 2775 /var/www
 sudo systemctl enable httpd
 sudo systemctl start httpd
 EOF
-depends_on = [aws_instance.epm-srv-web-1, aws_efs_file_system.epm-efs, module.db]
-tags = merge(var.common-tags, {Name = "${var.common-tags["Environment"]} Web Server 2"})
+depends_on  = [aws_instance.epm-srv-web-1, aws_efs_file_system.epm-efs, module.db]
+tags        = merge(var.common-tags, {Name = "${var.common-tags["Environment"]} Web Server 2"})
 }
 
 resource "aws_efs_file_system" "epm-efs" {

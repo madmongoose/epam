@@ -1,5 +1,3 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
 variable "generated_key_name" {
   type        = string
   //default     = "terraform-key-pair"
@@ -15,6 +13,6 @@ variable "common-tags" {
   default = {
       Owner = "Roman Gorokhovsky"
       Project = "Epam"
-      Environment = "Prod"
+      Environment = "Study"
   }
 }
