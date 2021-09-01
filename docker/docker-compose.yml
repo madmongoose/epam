@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  nginx:
+    image: localhost:5000/mmg/nginx
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 1
+    ports:
+      - "80:81"
+    volumes:
+      - ./web:/web
+    networks:
+      network-1:
+  httpd:
+    image: localhost:5000/mmg/httpd
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 1
+    ports:
+      - "8080:82"
+    volumes:
+      - ./web:/web
+    networks:
+      network-2:
+networks:
+  network-1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
+  network-2:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.200.0/24
