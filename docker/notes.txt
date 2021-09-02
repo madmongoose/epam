@@ -1,0 +1,9 @@
+docker run -d -p 81:81 -v /tmp/web:/web nginx81
+docker run -d -p 82:82 -v /tmp/web:/web httpd82
+docker build . -t mmg/nginx:v1 -t mmg/nginx:latest
+docker run -d -p 5000:5000 --name registry registry:2.7
+docker image tag mmg/nginx:v1 localhost:5000/mmg/nginx:v1
+docker image tag mmg/httpd:v1 localhost:5000/mmg/httpd:v1
+docker image tag mmg/httpd:latest localhost:5000/mmg/httpd:latest
+docker image tag mmg/nginx:latest localhost:5000/mmg/nginx:latest
+docker push localhost:5000/mmg/httpd
